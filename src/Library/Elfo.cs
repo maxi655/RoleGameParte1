@@ -14,7 +14,7 @@ public class Elfo
         int total = 0;
         foreach (var item in Items)
         {
-            total += item.Ataque;
+            total += item.ValorAtaque;
         }
         return total;
     }
@@ -24,5 +24,5 @@ public class Elfo
         int total = 0;
         foreach (var item in Items)
         {
-            total += item.Defensa;
+            total += item.ValorDefensa;
         }
