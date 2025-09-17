@@ -16,6 +16,7 @@ public class Elfo
         {
             total += item.ValorAtaque;
         }
+
         return total;
     }
 
@@ -26,3 +27,7 @@ public class Elfo
         {
             total += item.ValorDefensa;
         }
+
+        return total;
+    }
+}
