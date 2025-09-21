@@ -94,3 +94,29 @@ public class Tests
     // los poderes devuelta por el método coincide con el valor esperado. Si la suma coincide, significa que el
     // método acumula correctamente los poderes de los hechizos; si no, el test falla, indicando un error en la suma.
 }
+    [Test]
+    public void Atacar_NoGeneraDanioNegativo()
+    {
+    // Arrange
+    Elfo elfo = new Elfo("Legolas", 10);      // Ataque bajo
+    Enano enano = new Enano("Gimli", 20);     // Defensa alta
+
+    Item espada = new Item("Espada", 5, 0);
+    Item armadura = new Item("Armadura", 0, 15);
+
+    elfo.Items.Add(espada);
+    elfo.Equipar(espada);
+
+    enano.Items.Add(armadura);
+    enano.Equipar(armadura);
+
+    int saludInicial = enano.ActualSalud;
+
+    // Act
+    elfo.Atacar(enano);
+
+    // Assert
+    Assert.AreEqual(saludInicial, enano.ActualSalud,
+        "El ataque no debe generar daño negativo ni aumentar la salud del objetivo.");
+}
+//Se agrega un caso de prueba para verificar que al atacar un personaje con defensa mayor al ataque, no se genere daño negativo ni se incremente la salud del objetivo. Esto asegura que la lógica de combate respeta el mínimo daño de 0.
