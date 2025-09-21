@@ -93,7 +93,6 @@ public class Tests
     // Al agregar varios hechizos al Spellbook con poderes conocidos, el test comprueba que la suma de todos
     // los poderes devuelta por el método coincide con el valor esperado. Si la suma coincide, significa que el
     // método acumula correctamente los poderes de los hechizos; si no, el test falla, indicando un error en la suma.
-}
     [Test]
     public void Atacar_SinArma_NoHaceDanio()
     {
@@ -105,8 +104,9 @@ public class Tests
 
     Assert.AreEqual(saludInicial, enano.ActualSalud, 
         "Si el personaje no tiene un arma equipada, no debería infligir daño.");
-}
+    }
     //Justificación:
     //Este test tiene sentido porque valida que la regla de ataque depende de tener un ítem ofensivo equipado.
+}
 
    
