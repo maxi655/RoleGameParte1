@@ -1,0 +1,25 @@
+[Test]
+public void Atacar_NoGeneraDanioNegativo()
+{
+    // Arrange
+    Elfo elfo = new Elfo("Legolas", 50);      // Ataque relativamente bajo
+    Enano enano = new Enano("Gimli", 100);    // Defensa mayor que el ataque
+
+    Item espadaDebil = new Item("Espada débil", 5, 0);
+    Item armaduraFuerte = new Item("Armadura fuerte", 0, 20);
+
+    elfo.Items.Add(espadaDebil);
+    elfo.Equipar(espadaDebil);
+
+    enano.Items.Add(armaduraFuerte);
+    enano.Equipar(armaduraFuerte);
+
+    int saludInicial = enano.ActualSalud;
+
+    // Act
+    elfo.Atacar(enano);
+
+    // Assert
+    Assert.AreEqual(saludInicial, enano.ActualSalud,
+        "Si la defensa es mayor que el ataque, la salud del objetivo no debe disminuir ni generar daño negativo.");
+}
