@@ -44,7 +44,7 @@ class Program
         elfo.Equipar(espada);
         enano.Equipar(hacha);
 
-        Console.WriteLine("\n--- Estado inicial ---");
+        Console.WriteLine("\n Estado inicial ");
         MostrarSalud(mago);
         MostrarSalud(elfo);
         MostrarSalud(enano);
@@ -66,22 +66,17 @@ class Program
         elfo.Curar(pocion);
 
         // Mostrar estado final
-        Console.WriteLine("\n--- Estado final ---");
+        Console.WriteLine("\n Estado final ");
         MostrarSalud(mago);
         MostrarSalud(elfo);
         MostrarSalud(enano);
+        
+     
     }
 
     static void MostrarSalud(IAttackable personaje)
     {
-        var nombre = personaje is Mago m ? m.Nombre :
-                     personaje is Elfo e ? e.Nombre :
-                     personaje is Enano en ? en.Nombre :
-                     "Desconocido";
-        var maxSalud = personaje is Mago m2 ? m2.MaxSalud :
-                       personaje is Elfo e2 ? e2.MaxSalud :
-                       personaje is Enano en2 ? en2.MaxSalud :
-                       0;
-        Console.WriteLine($"{nombre}: {personaje.ActualSalud}/{maxSalud} de salud.");
+        Console.WriteLine($"{personaje.Nombre}: {personaje.ActualSalud}/{personaje.MaxSalud} de salud.");
     }
+    
 }

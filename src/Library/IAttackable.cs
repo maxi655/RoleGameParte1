@@ -1,8 +1,7 @@
-﻿namespace Library;
-
-// Interfaz para todo lo que puede recibir ataques
-public interface IAttackable
+﻿public interface IAttackable
 {
+    string Nombre { get; }
     int ActualSalud { get; set; }
+    int MaxSalud { get; }
     int GetTotalDefensa();
 }
