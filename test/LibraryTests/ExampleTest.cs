@@ -71,5 +71,42 @@ public class Tests
     // Si el ítem se elimina del inventario pero sigue equipado, el personaje tendría estadísticas 
     // alteradas de manera indebida.
 
-    
+    [Test]
+    public void spellbook_sumaPoderTotalCorrectamente()
+    {
+        // Crea un Spellbook
+        var spellbook = new Spellbook();
+
+        // Aprende hechizos
+        spellbook.AprenderHechizo(new Hechizo("Fuego", 30));
+        spellbook.AprenderHechizo(new Hechizo("Hielo", 20));
+        spellbook.AprenderHechizo(new Hechizo("Rayo", 50));
+
+        // Obtiene poder total
+        int poderTotal = spellbook.GetPoderTotal();
+
+        // Verifica si la suma es correcta
+        Assert.AreEqual(100, poderTotal, "El poder total debe ser la suma de los poderes de los hechizos.");
+    }
+    // Justificación:
+    // Este test verifica que el método GetPoderTotal() de la clase Spellbook funcione correctamente.
+    // Al agregar varios hechizos al Spellbook con poderes conocidos, el test comprueba que la suma de todos
+    // los poderes devuelta por el método coincide con el valor esperado. Si la suma coincide, significa que el
+    // método acumula correctamente los poderes de los hechizos; si no, el test falla, indicando un error en la suma.
+    [Test]
+    public void Atacar_SinArma_NoHaceDanio()
+    {
+    var elfo = new Elfo("Legolas", 100);
+    var enano = new Enano("Gimli", 120);
+
+    int saludInicial = enano.ActualSalud;
+    elfo.Atacar(enano);
+
+    Assert.AreEqual(saludInicial, enano.ActualSalud, 
+        "Si el personaje no tiene un arma equipada, no debería infligir daño.");
+    }
+    //Justificación:
+    //Este test tiene sentido porque valida que la regla de ataque depende de tener un ítem ofensivo equipado.
 }
+
+   
