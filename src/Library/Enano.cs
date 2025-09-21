@@ -1,20 +1,23 @@
-namespace Library
-{ 
-    public class Elfo : IAttackable
-    {
-        public string Nombre { get; set; }
+﻿namespace Library;
+
+public class Enano : IAttackable
+{
+    public string Nombre { get; set; }
         public int MaxSalud { get; set; }
         public int ActualSalud { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
         public Item ItemEquipado { get; set; }
 
-        public Elfo(string nombre, int maxSalud)
+        public Enano(string nombre, int maxSalud)
         {
             Nombre = nombre;
             MaxSalud = maxSalud;
             ActualSalud = maxSalud;
         }
 
+        // Justificación:
+        // El Enano obtiene su ataque de los ítems equipados.
+        // Aplicamos el patrón Experto en información.
         public int GetTotalAtaque()
         {
             int total = 0;
@@ -23,6 +26,8 @@ namespace Library
             return total;
         }
 
+        // Justificación:
+        // El Enano obtiene su defensa de los ítems equipados.
         public int GetTotalDefensa()
         {
             int total = 0;
@@ -31,7 +36,6 @@ namespace Library
             return total;
         }
 
-        // Ahora puede atacar a cualquier IAttackable
         public void Atacar(IAttackable objetivo)
         {
             int danio = GetTotalAtaque() - objetivo.GetTotalDefensa();
@@ -40,14 +44,14 @@ namespace Library
             objetivo.ActualSalud -= danio;
             if (objetivo.ActualSalud < 0) objetivo.ActualSalud = 0;
 
-            Console.WriteLine($"{Nombre} ataca causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
+            Console.WriteLine($"{Nombre} ataca con furia causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
         }
 
         public void Curar(Item objeto)
         {
             if (Items.Contains(objeto) && objeto.Nombre.ToLower().Contains("poción"))
             {
-                ActualSalud += objeto.ValorDefensa; // asumimos que ValorDefensa = cantidad de curación
+                ActualSalud += objeto.ValorDefensa;
                 if (ActualSalud > MaxSalud) ActualSalud = MaxSalud;
 
                 Console.WriteLine($"{Nombre} usa {objeto.Nombre} y recupera {objeto.ValorDefensa} de salud. Salud actual: {ActualSalud}/{MaxSalud}");
@@ -87,6 +91,4 @@ namespace Library
                 Console.WriteLine($"{item.Nombre} no está en el inventario.");
             }
         }
-    }
 }
-
