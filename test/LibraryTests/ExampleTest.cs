@@ -36,32 +36,34 @@ public class Tests
     [Test]
     public void Curar_NoSuperaSaludMax()
     {
-        Personaje heroe = new Personaje("Aragorn", 100);
-        heroe.RecibirDaño(20); // salud actual = 80
+        var elfo = new Elfo("Legolas", 100);
+        elfo.ActualSalud = 80;
     
-        heroe.Curar(50); // intenta curar mas de lo necesario 
+        var pocion = new Item("Poción curativa", 0, 50);
+        elfo.Items.Add(pocion);
     
-        Assert.AreEqual(100, heroe.Salud);
+        elfo.Curar(pocion); // intenta curar más de lo necesario
+    
+        Assert.AreEqual(100, elfo.ActualSalud);
     }
     
     // Justificación: 
     // Este test es necesario porque asegura que el método Curar respeta el tope de salud máxima. 
     // Sin esta validación, el personaje podría terminar con más puntos de salud de los permitidos, 
     // rompiendo la lógica del juego.
-
+    
     [Test]
     public void SacarItem_EliminaDelInventarioYDesEquipa()
     {
-        Personaje elfo = new Personaje("Legolas", 100);
-        Item arco = new Item("Arco", 10, 0);
-        elfo.AgregarItem(arco);
-        elfo.EquiparItem(arco);
+        var elfo = new Elfo("Legolas", 100);
+        var arco = new Item("Arco", 10, 0);
+        elfo.Items.Add(arco);
+        elfo.Equipar(arco);
     
         elfo.SacarItem(arco);
     
-        Assert.IsFalse(elfo.Inventario.Contains(arco));
-        Assert.IsFalse(elfo.ItemsEquipados.Contains(arco));
-        
+        Assert.IsFalse(elfo.Items.Contains(arco));
+        Assert.IsNull(elfo.ItemEquipado);
     }
     
     // Justificación: 
