@@ -44,7 +44,7 @@ public class Mago : IAttackable
             objetivo.ActualSalud -= danio;
             if (objetivo.ActualSalud < 0) objetivo.ActualSalud = 0;
 
-            Console.WriteLine($"{Nombre} lanza un ataque mágico causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
+            Console.WriteLine($"{Nombre} ataca causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
         }
 
         public void Curar(Item objeto)

@@ -44,7 +44,7 @@ public class Enano : IAttackable
             objetivo.ActualSalud -= danio;
             if (objetivo.ActualSalud < 0) objetivo.ActualSalud = 0;
 
-            Console.WriteLine($"{Nombre} ataca con furia causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
+            Console.WriteLine($"{Nombre} ataca causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
         }
 
         public void Curar(Item objeto)
