@@ -14,7 +14,8 @@ namespace Library
             MaxSalud = maxSalud;
             ActualSalud = maxSalud;
         }
-
+        // Experto en información: Elfo es el que conoce
+        // sus ítems, por lo tanto él debe calcular su poder de ataque.
         public int GetTotalAtaque()
         {
             int total = 0;
@@ -22,7 +23,8 @@ namespace Library
                 total += ItemEquipado.ValorAtaque;
             return total;
         }
-
+        // Igual que en ataque: Elfo es responsable de calcular su defensa,
+        // porque conoce su inventario y equipo. Evitamos depender de otra clase.
         public int GetTotalDefensa()
         {
             int total = 0;
@@ -31,7 +33,10 @@ namespace Library
             return total;
         }
 
-        // Ahora puede atacar a cualquier IAttackable
+        // Atacar encapsula la lógica de combate. Elfo aplica su ataque
+        // contra el objetivo y no permite que exista daño negativo.
+        // Se respeta SRP porque el ataque es parte del comportamiento
+        // del personaje y no de los ítems.
         public void Atacar(IAttackable objetivo)
         {
             int danio = GetTotalAtaque() - objetivo.GetTotalDefensa();
@@ -42,7 +47,8 @@ namespace Library
 
             Console.WriteLine($"{Nombre} ataca causando {danio} de daño. Salud restante del objetivo: {objetivo.ActualSalud}");
         }
-
+        // Curar devuelve salud al personaje. Se eligió que el método esté
+        // en Elfo porque es el "experto en su propia vida".
         public void Curar(Item objeto)
         {
             if (Items.Contains(objeto) && objeto.Nombre.ToLower().Contains("poción"))
