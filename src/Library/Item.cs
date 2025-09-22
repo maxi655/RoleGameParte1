@@ -12,4 +12,6 @@ public class Item
         ValorAtaque = valorAtaque;
         ValorDefensa = valorDefensa;
     }
+    // Item solo conoce sus propios valores, sin lógica de combate.
+    // Así se puede reutilizar en cualquier personaje.
 }

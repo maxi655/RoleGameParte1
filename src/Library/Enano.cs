@@ -15,9 +15,7 @@ public class Enano : IAttackable
             ActualSalud = maxSalud;
         }
 
-        // Justificación:
-        // El Enano obtiene su ataque de los ítems equipados.
-        // Aplicamos el patrón Experto en información.
+    
         public int GetTotalAtaque()
         {
             int total = 0;

@@ -10,4 +10,7 @@ public class Hechizo
         Nombre = nombre;
         Poder = poder;
     }
+    // Esta clase tiene una única responsabilidad:
+    // representar un hechizo con sus valores.
 }
+

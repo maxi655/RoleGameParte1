@@ -32,9 +32,12 @@ public class Tests
         Assert.Less(enano.ActualSalud, saludInicial,
             "El ataque debe reducir la salud del objetivo en función del ataque menos la defensa.");
     }
-    
+    // Justificación: 
+    // Este test es necesario porque asegura que el método Curar respeta el tope de salud máxima. 
+    // Sin esta validación, el personaje podría terminar con más puntos de salud de los permitidos, 
+    // rompiendo la lógica del juego.
     [Test]
-    public void Curar_NoSuperaSaludMax()
+    public void Curar_NoSuperaMaxSalud()
     {
         var elfo = new Elfo("Legolas", 100);
         elfo.ActualSalud = 80;
@@ -46,12 +49,10 @@ public class Tests
     
         Assert.AreEqual(100, elfo.ActualSalud);
     }
-    
     // Justificación: 
-    // Este test es necesario porque asegura que el método Curar respeta el tope de salud máxima. 
-    // Sin esta validación, el personaje podría terminar con más puntos de salud de los permitidos, 
-    // rompiendo la lógica del juego.
-    
+    // Este test es necesario para garantizar que al remover un ítem no queden referencias "fantasma". 
+    // Si el ítem se elimina del inventario pero sigue equipado, el personaje tendría estadísticas 
+    // alteradas de manera indebida.
     [Test]
     public void SacarItem_EliminaDelInventarioYDesEquipa()
     {
@@ -65,14 +66,13 @@ public class Tests
         Assert.IsFalse(elfo.Items.Contains(arco));
         Assert.IsNull(elfo.ItemEquipado);
     }
-    
-    // Justificación: 
-    // Este test es necesario para garantizar que al remover un ítem no queden referencias "fantasma". 
-    // Si el ítem se elimina del inventario pero sigue equipado, el personaje tendría estadísticas 
-    // alteradas de manera indebida.
-
+    // Justificación:
+    // Este test verifica que el método GetPoderTotal() de la clase Spellbook funcione correctamente.
+    // Al agregar varios hechizos al Spellbook con poderes conocidos, el test comprueba que la suma de todos
+    // los poderes devuelta por el método coincide con el valor esperado. Si la suma coincide, significa que el
+    // método acumula correctamente los poderes de los hechizos; si no, el test falla, indicando un error en la suma.
     [Test]
-    public void spellbook_sumaPoderTotalCorrectamente()
+    public void Spellbook_SumaPoderTotalCorrectamente()
     {
         // Crea un Spellbook
         var spellbook = new Spellbook();
@@ -88,11 +88,8 @@ public class Tests
         // Verifica si la suma es correcta
         Assert.AreEqual(100, poderTotal, "El poder total debe ser la suma de los poderes de los hechizos.");
     }
-    // Justificación:
-    // Este test verifica que el método GetPoderTotal() de la clase Spellbook funcione correctamente.
-    // Al agregar varios hechizos al Spellbook con poderes conocidos, el test comprueba que la suma de todos
-    // los poderes devuelta por el método coincide con el valor esperado. Si la suma coincide, significa que el
-    // método acumula correctamente los poderes de los hechizos; si no, el test falla, indicando un error en la suma.
+    //Justificación:
+    //Este test tiene sentido porque valida que la regla de ataque depende de tener un ítem ofensivo equipado.
     [Test]
     public void Atacar_SinArma_NoHaceDanio()
     {
@@ -105,8 +102,33 @@ public class Tests
     Assert.AreEqual(saludInicial, enano.ActualSalud, 
         "Si el personaje no tiene un arma equipada, no debería infligir daño.");
     }
-    //Justificación:
-    //Este test tiene sentido porque valida que la regla de ataque depende de tener un ítem ofensivo equipado.
+    // Justificación:
+    // Necesario para comprobar que un ataque no puede generar "daño negativo" (es decir, curar al objetivo).
+    [Test]
+    public void Atacar_NoGeneraDanioNegativo()
+    {
+        // Arrange
+        Elfo elfo = new Elfo("Legolas", 10);      // Ataque bajo
+        Enano enano = new Enano("Gimli", 20);     // Defensa alta
+
+        Item espada = new Item("Espada", 5, 0);
+        Item armadura = new Item("Armadura", 0, 15);
+
+        elfo.Items.Add(espada);
+        elfo.Equipar(espada);
+
+        enano.Items.Add(armadura);
+        enano.Equipar(armadura);
+
+        int saludInicial = enano.ActualSalud;
+
+        // Act
+        elfo.Atacar(enano);
+
+        // Assert
+        Assert.AreEqual(saludInicial, enano.ActualSalud,
+            "El ataque no debe generar daño negativo ni aumentar la salud del objetivo.");
+    }
 }
 
    
